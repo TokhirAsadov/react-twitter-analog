@@ -12,13 +12,15 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       data: [
-        { label: "Going to learn React JS", important: true, id: "qw" },
-        { label: "That is so good", important: false, id: "qe" },
-        { label: "i need a beak...", important: false, id: "qr" },
+        { label: "Going to learn React JS", important: true, id: 1 },
+        { label: "That is so good", important: false, id: 2 },
+        { label: "i need a beak...", important: false, id: 3 },
       ],
     };
     this.deleteItem = this.deleteItem.bind(this);
     this.addItem = this.addItem.bind(this);
+
+    this.maxId = 4;
   }
 
   deleteItem(id) {
@@ -37,7 +39,17 @@ export default class App extends React.Component {
   }
 
   addItem(body) {
-    console.log(body);
+    const newItem = {
+      label: body,
+      important: false,
+      id: this.maxId++,
+    };
+    this.setState(({ data }) => {
+      const newArr = [...data, newItem];
+      return {
+        data: newArr,
+      };
+    });
   }
 
   render() {
