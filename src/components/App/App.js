@@ -3,26 +3,54 @@ import PostAddForm from "../PostAddForm/PostAddForm";
 import PostList from "../PostList";
 import PostStatusFilter from "../PostStatusFilter";
 import SearchPanel from "../SearchPanel";
+import React from "react";
 
 import "./App.css";
-const App = () => {
-  const data = [
-    { label: "Going to learn React JS", important: true, id: "qw" },
-    { label: "That is so good", important: false, id: "qe" },
-    { label: "i need a beak...", important: false, id: "qr" },
-  ];
 
-  return (
-    <div className="app">
-      <AppHeader />
-      <div className="search-panel d-flex">
-        <SearchPanel />
-        <PostStatusFilter />
+export default class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: [
+        { label: "Going to learn React JS", important: true, id: "qw" },
+        { label: "That is so good", important: false, id: "qe" },
+        { label: "i need a beak...", important: false, id: "qr" },
+      ],
+    };
+    this.deleteItem = this.deleteItem.bind(this);
+    this.addItem = this.addItem.bind(this);
+  }
+
+  deleteItem(id) {
+    this.setState(({ data }) => {
+      const index = data.findIndex((elem) => elem.id === id);
+
+      const before = data.slice(0, index);
+      const after = data.slice(index + 1);
+
+      const newArr = [...before, ...after];
+
+      return {
+        data: newArr,
+      };
+    });
+  }
+
+  addItem(body) {
+    console.log(body);
+  }
+
+  render() {
+    return (
+      <div className="app">
+        <AppHeader />
+        <div className="search-panel d-flex">
+          <SearchPanel />
+          <PostStatusFilter />
+        </div>
+        <PostList posts={this.state.data} onDelete={this.deleteItem} />
+        <PostAddForm onAdd={this.addItem} />
       </div>
-      <PostList posts={data} />
-      <PostAddForm />
-    </div>
-  );
-};
-
-export default App;
+    );
+  }
+}

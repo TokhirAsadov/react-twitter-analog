@@ -1,16 +1,20 @@
 import "./PostAddForm.css";
 
-export default function PostAddForm() {
+export default function PostAddForm({ onAdd }) {
   return (
-    <form className="bottom-panel d-flex">
+    <div className="bottom-panel d-flex">
       <input
         type="text"
         placeholder="What are you thinking about"
         className="form-control new-post-label"
       ></input>
-      <button type="submit" className="btn btn-outline-secondary">
+      <button
+        type="submit"
+        className="btn btn-outline-secondary"
+        onClick={() => onAdd("Hello world")}
+      >
         Add Post
       </button>
-    </form>
+    </div>
   );
 }
