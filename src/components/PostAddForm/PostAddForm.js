@@ -19,7 +19,10 @@ export default class PostAddForm extends React.Component {
 
   onSubmit(e) {
     e.preventDefault();
-    this.props.onAdd(this.state.text);
+    if (this.state.text !== "" && this.state.text.trim() !== "") {
+      this.props.onAdd(this.state.text);
+    }
+
     this.setState({
       text: "",
     });
